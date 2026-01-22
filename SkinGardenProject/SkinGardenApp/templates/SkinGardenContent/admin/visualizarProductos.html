@@ -1,0 +1,45 @@
+{% extends "SkinGardenContent/admin/EncabezadoAdmin.html" %}
+
+{% load static %}
+
+{% block content %}
+        <main onclick="cerrarMenuDesarrollador(), cerrarMenuAbierto(), cerrarCarritoCompra()" class="responsive-main">
+            <div class="raya-titulo">
+                <h1 class="titulo-visualizar">Visualizar</h1>
+            </div>
+            <a href="#" onclick="regresarAtras()">
+                <img src="{% static 'SkinGardenContent/imagenes/iconos/volver-atras.png' %}" alt="Volver atras" class="volver-atras" title="Volver Atras">
+            </a>
+            <section class="visualizar-contenido">
+                <div class="filasP">
+                    {% for ver in visualizar %}
+                    <div class="bgCajas visualizar-caja-admin">
+                        <div class="contenido-cajas-visualziar">
+                            <h2 class="id-visualizar">{{ ver.id_productos }}</h2>
+                            <p class="titulo-productos-visualizar">Nombre:</p>
+                            <h2 class="producto-nombre-visualizar">{{ ver.nom_producto }}</h2>
+                            <p class="titulo-productos-visualizar">Descripcion:</p>
+                            <p class="info-producto-visualziar">{{ ver.descripcion }}</p>
+                            <p class="titulo-productos-visualizar">Precio:</p>
+                            <p class="precio-visualizar">RD$ {{ ver.precio }}</p>
+                            <p class="titulo-productos-visualizar">Categoría:</p>
+                            {% if ver.id_categoria %}
+                                <p class="categoria-visualizar">{{ ver.id_categoria.nom_categoria }}</p>
+                            {% else %}
+                                <p class="categoria-visualizar">Sin categoría</p>
+                            {% endif %}
+                            <p class="titulo-productos-visualizar">Calificación:</p>
+                            <figure class="conjunto-estrellas">
+                                <p>{{ ver.calificacion }}</p>
+                            </figure>
+                            <figure class="img-editar-eliminar">
+                                <a href="{% url 'editarProducto/admin' ver.id_productos %}"><img src="{% static 'SkinGardenContent/imagenes/iconos/editar.png' %}" alt="Editar Producto" title="Editar Producto" class="editar"></a>
+                                <a href="{% url 'eliminarProducto' ver.id_productos %}" onclick="eliminarProducto({{ producto.id_productos }});"><img src="{% static 'SkinGardenContent/imagenes/iconos/zafacon.png' %}" alt="Eliminar producto" title="Eliminar producto" class="zafacon"></a>
+                            </figure> 
+                        </div>                      
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+        </main>
+{% endblock %}

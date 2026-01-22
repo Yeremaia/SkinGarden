@@ -1,0 +1,76 @@
+
+
+{% extends "SkinGardenContent/admin/EncabezadoAdmin.html" %}
+
+{% load static %}
+
+{%  block content %}
+        <nav onclick="cerrarMenuAbierto(), cerrarCarritoCompra(), cerrarMenuDesarrollador()" class="responsive-main">
+            <div class="raya-titulo">
+                <h2 class="titulo-categorias">Categorías</h2>
+            </div>
+            <a href="#" onclick="regresarAtras()">
+                <img src="{% static 'SkinGardenContent/imagenes/iconos/volver-atras.png' %}" alt="Volver atras" class="volver-atras" title="Volver Atras">
+            </a>
+            <ul>
+                <li><a href="{% url 'hidratacionRostroAdmin/admin' %}">Hidratación Rostro</a></li>
+                <li><a href="{% url 'hidratacionCuerpoAdmin/admin' %}">Hidratación Cuerpo</a></li>
+                <li><a href="{% url 'limpiadoresAdmin/admin' %}">Limpiadores</a></li>
+                <li><a href="#" class="color-menu-categoria">Anti-Imperfecciones</a></li>
+            </ul>
+        </nav>
+        <main onclick="cerrarMenuAbierto(), cerrarCarritoCompra(), cerrarMenuDesarrollador()">
+            <section class="anti-imperfecciones">
+                <div class="filasP">
+                    {% for ver in crema %}
+                    <div class="bgCajas responsiveCajas">
+                        <!-- Formulario para agregar al carrito -->
+                        <form>
+                            <img src="{% static 'SkinGardenContent/imagenes/iconos/añadir-carrito.png' %}" alt="frame" class="addCarrito">
+                
+                            <!-- Condición para verificar si el producto es "new" y mostrar la barra de descuento -->
+                            {% if ver.estado == "new" %}
+                            <p class="discount">-80%</p>
+                            {% endif %}
+                
+                            <!-- Imagen del producto -->
+                            <figure class="figureCaja">
+                                <a href="{% url 'productoAdmin/admin' producto_id=ver.id_productos %}" class="links">
+                                    <img src="{% static 'SkinGardenContent/imagenes/productos/anti-imperfecciones/anti-impe1.png' %}"
+                                        alt="Anthelios Oil Correct SPF 50+" class="imagenesP">
+                                </a>
+                            </figure>
+                
+                            <!-- Información del producto -->
+                            <div class="productInfo">
+                                <h2 class="productName">{{ ver.nom_producto }}</h2>
+                                <p class="infoProduct">{{ ver.descripcion }}</p>
+                            </div>
+                
+                            <!-- Precio del producto con descuento, si aplica -->
+                            <div class="ofertas-p">
+                                {% if ver.totalDescuento != ver.precio %}
+                                <p class="antiguoP">RD$ {{ ver.precio }}</p>
+                                <p class="nuevoP">RD$ {{ ver.totalDescuento }}</p>
+                                {% else %}
+                                <p class="precio">RD$ {{ ver.precio }}</p>
+                                {% endif %}
+                            </div>
+                
+                            <!-- Calificación del producto -->
+                            <figure class="qualyRates">
+                                <p>{{ ver.calificacion }}</p>
+                            </figure>
+                
+                            <!-- Campo oculto para cantidad (valor predeterminado a 1) -->
+                            <input type="hidden" name="cantidad" value="1">
+                        </form>
+                    </div>
+                    {% empty %}
+                    <p>No hay productos en esta categoría.</p>
+                    {% endfor %}
+                </div>
+            </section>
+        </main>
+{%  endblock %}
+ 

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es-DO">
+{% block content %}
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Skin Garden, el jardín que cuida tu piel podras encontrar todas las variedades de productos para el cuidado de tu piel.">
+    <meta name="keywords" content="Skin Garden, productos para la piel, limpiadores, hidratacion de cuerpo, hidratacion de rostro">
+    <title>Editar Producto</title>
+    <link rel="stylesheet" href="{% static 'SkinGardenContent/css/estilos.css' %}">
+    <link rel="icon" href="{% static 'SkinGardenContent/imagenes/logo-banners/planta-logo.png' %}">
+    <script src="{% static 'SkinGardenContent/js/funciones.js' %}"></script>
+</head>
+<body class="cuerpo-contraseña">
+    <form class="form" method="POST" action="{% url 'editarProducto/admin' producto.id_productos %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h1 class="titulo-contraseña titulo-agregar">Editar Producto</h1>
+
+        <!-- Mostrar la imagen actual del producto -->
+        <img src="{{ producto.imagen.url }}" alt="Imagen del producto" title="Imagen del archivo seleccionado" class="circulo-archivo" id="imagen-cambiar">
+
+        <!-- Campo para cargar una nueva imagen -->
+        <input type="file" name="imagen" id="archivo">
+
+        <!-- Script para cambiar la imagen dependiendo del input file -->
+        <script>
+            const imagenArchivo = document.getElementById('archivo');
+            const imagenDefault = document.getElementById('imagen-cambiar');
+
+            imagenArchivo.addEventListener('change', (event) => {
+                const archivo = event.target.files[0];
+                const leerArchivo = new FileReader();
+
+                leerArchivo.onload = (e) => {
+                    imagenDefault.src = e.target.result;
+                };
+
+                leerArchivo.readAsDataURL(archivo);
+            });
+        </script>
+
+        <label for="nombreProducto"></label>
+        <input type="text" id="nombreProducto" name="nombreProducto" value="{{ producto.nom_producto }}" required class="input-form">
+
+        <label for="precio"></label>
+        <input type="text" id="precio" name="precio" required class="input-form" value="{{ producto.precio }}" step="0.01">
+
+        <label for="descuento"></label>
+        <input type="number" id="descuento" name="descuento" value="{{ producto.descuento }}" required class="input-form">
+
+        <label for="descripcion"></label>
+        <textarea name="descripcion" id="descripcion" cols="10" rows="10" class="input-form descripcion-input" required>{{ producto.descripcion }}</textarea>
+
+        <label for="fechapub" class="guia-agregar-producto">Fecha publicado actual: {{ producto.fecha_pub }} </label>
+        <input type="date" id="fechapub" name="fechapub" placeholder="{{ producto.fecha_pub }}" required class="input-form">
+
+        <div class="contenido-radio-agregarProducto">
+            <div class="radio-agregarProducto">
+                <div class="radio-form">
+                    <input type="radio" name="categorias" value="2" {% if producto.id_categoria_id == 2 %}checked{% endif %}> Hidratación Cuerpo
+                </div>
+                <div class="radio-form">
+                    <input type="radio" name="categorias" value="3" {% if producto.id_categoria_id == 3 %}checked{% endif %}> Hidratación Rostro
+                </div>
+                <div class="radio-form">
+                    <input type="radio" name="categorias" value="4" {% if producto.id_categoria_id == 4 %}checked{% endif %}> Anti-imperfecciones
+                </div>
+                <div class="radio-form">
+                    <input type="radio" name="categorias" value="1" {% if producto.id_categoria_id == 1 %}checked{% endif %}> Limpiadores
+                </div>
+            </div>
+        </div>
+
+        <!-- Botón para enviar -->
+        <button type="submit" class="boton">Guardar</button>
+        <a href="#" class="atras-agregar" onclick="regresarAtras()">Volver</a>
+    </form>
+</body>
+{% endblock %}
+</html>

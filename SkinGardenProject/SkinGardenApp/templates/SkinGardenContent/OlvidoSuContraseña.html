@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es-DO">
+{% block content %}
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Skin Garden, el jardin que cuida tu piel podras encontrar todas las variedades de productos para el cuidado de tu piel.">
+    <meta name="keywords"
+        content="Skin Garden, productos para la piel, limpiadores, hidratacion de cuerpo, hidratacion de rostro">
+    <title>¿Olvidaste tu Contraseña?</title>
+    <link rel="stylesheet" href="{% static 'SkinGardenContent/css/estilos.css' %}">
+    <link rel="icon" href="{% static 'SkinGardenContent/imagenes/logo-banners/planta-logo.png' %}">
+    <script src="{% static 'SkinGardenContent/js/funciones.js' %}"></script>
+</head>
+
+<body class="cuerpo-contraseña">
+    <!-- Formulario para ingresar el correo -->
+    <form class="form" method="POST" action="{% url 'verificar_correo' %}">
+        {% csrf_token %}
+        <img id="img" src="{% static 'SkinGardenContent/imagenes/iconos/olvidecontra.png' %}" width="30%" alt="">
+        <h1 class="titulo-contraseña">¿No recuerdas tu contraseña?</h1>
+        <h4 class="subtitulo3">Por favor, ingrese su correo electrónico.</h4>
+
+        {% if messages %}
+        <div id="mensaje" class="mensaje">
+            {% for message in messages %}
+            <p style="text-align: center;">{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Campo para ingresar el correo -->
+        <label for="correoRecuperacion"></label>
+        <input type="email" id="correoRecuperacion" name="correo" placeholder="Correo electrónico" size="30" required
+            class="input-form">
+
+        <!-- Botón para continuar -->
+        <button class="boton" type="submit">Continuar</button>
+
+        <!-- Botón de volver atrás -->
+        <a class="atras" href="{% url 'inicio_sesion' %}">Volver</a>
+    </form>
+</body>
+{% endblock %}
+
+</html>

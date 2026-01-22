@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es-DO">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Skin Garden, el jardín que cuida tu piel. Podrás encontrar todas las variedades de productos para el cuidado de tu piel.">
+    <meta name="keywords" content="Skin Garden, productos para la piel, limpiadores, hidratación de cuerpo, hidratación de rostro">
+    <title>Agregar Productos</title>
+    <link rel="stylesheet" href="{% static 'SkinGardenContent/css/estilos.css' %}">
+    <script src="{% static 'SkinGardenContent/js/funciones.js' %}"></script>
+    <link rel="icon" href="{% static 'SkinGardenContent/imagenes/logo-banners/planta-logo.png' %}">
+</head>
+<body class="cuerpo-contraseña">
+    <!-- Formulario agregar producto -->
+    <form class="form" method="POST" action="{% url 'agregarProducto/admin' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h1 class="titulo-contraseña titulo-agregar">Agregar Producto</h1>
+
+        <!-- Imagen por defecto que se actualiza con el archivo cargado -->
+        <img src="{% static 'SkinGardenContent/imagenes/iconos/signodepregunta.jpg' %}" alt="Imagen" title="Imagen del archivo seleccionado" class="circulo-archivo" id="imagen-cambiar">
+        
+        <!-- Campo para cargar una nueva imagen -->
+        <input type="file" name="imagen" id="archivo" required>
+
+        <!-- Script para cambiar la imagen dependiendo del input file -->
+        <script>
+            const imagenArchivo = document.getElementById('archivo');
+            const imagenDefault = document.getElementById('imagen-cambiar');
+
+            imagenArchivo.addEventListener('change', (event) => {
+                const archivo = event.target.files[0];
+                const leerArchivo = new FileReader();
+
+                leerArchivo.onload = (e) => {
+                    imagenDefault.src = e.target.result;  // Actualiza la imagen de vista previa
+                };
+
+                leerArchivo.readAsDataURL(archivo);  // Lee el archivo como una URL de datos
+            });
+        </script>
+
+        <label for="nombreProducto"></label>
+        <input type="text" name="nom_producto" id="nombreProducto" placeholder="Nombre Producto.." size="30" required class="input-form">
+
+        <label for="precio"></label>
+        <input type="number" name="precio" id="precio" placeholder="Precio.." size="30" required class="input-form">
+
+        <p class="guia-agregar-producto">Poner "<span style="font-weight: bold;">0</span>" en caso de no tener descuento.</p>
+        <label for="descuento"></label>
+        <input type="number" name="descuento" id="descuento" placeholder="Descuento.." size="30" required class="input-form">
+
+        <label for="descripcion"></label>
+        <textarea name="descripcion" id="descripcion" cols="10" rows="10" class="input-form descripcion-input" placeholder="Descripción.." required></textarea>
+
+        <label for="calificacion"></label>
+        <input type="number" step="0.01" name="calificacion" id="calificacion" placeholder="Calificación (0-5)" required class="input-form">
+
+        <label for="fechapub" class="guia-agregar-producto"></label>
+        <input type="date" name="fecha_pub" id="fechapub" placeholder="30/04/2024" size="30" required class="input-form fecha-pub">
+
+        <div class="contenido-radio-agregarProducto">
+            <div class="radio-agregarProducto">
+                <div class="radio-form">
+                    <input type="radio" name="id_categoria" value="3" id="categoria1" checked> Hidratación Cuerpo
+                </div>
+                <div class="radio-form">
+                    <input type="radio" name="id_categoria" value="4" id ="categoria2"> Hidratación Rostro
+                </div>
+                <div class="radio-form">
+                    <input type="radio" name="id_categoria" value="2" id="categoria3"> Anti-imperfecciones
+                </div>
+                <div class="radio-form">
+                    <input type="radio" name="id_categoria" value="1" id="categoria4"> Limpiadores
+                </div>
+            </div>
+        </div>
+
+        <!-- Botón para enviar -->
+        <button type="submit" class="boton">Enviar</button>
+
+        <!-- Botón de volver atrás -->
+        <a href="#" onclick="regresarAtras()" class="atras-agregar">Volver</a>
+    </form>
+</body>
+{% block content %}
+{% endblock %}
+</html>

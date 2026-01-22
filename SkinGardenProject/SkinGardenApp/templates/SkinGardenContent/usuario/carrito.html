@@ -1,0 +1,49 @@
+{% extends "SkinGardenContent/usuario/encabezado.html" %}
+{% load static %}
+
+{% block content %}
+<div class="carrito-container">
+    <h1>Mi Carrito de Compras</h1>
+
+    <div class="productos-carrito">
+        {% if productos %}
+        <div class="productos-grid">
+            {% for producto in productos %}
+            <div class="producto-carrito">
+                <div class="producto-imagen">
+                    {% if producto.imagen %}
+                        <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
+                    {% else %}
+                        <img src="{% static 'SkinGardenContent/imagenes/productos/img-default.jpg' %}" alt="Imagen no disponible" class="imagenesP">
+                    {% endif %}
+                </div>
+                <div class="producto-info">
+                    <h2>{{ producto.nombre }}</h2>
+                    <p>Precio: RD ${{ producto.precio }}</p>
+                    <p>Cantidad: {{ producto.cantidad }}</p>
+                </div>
+                <div class="producto-opciones">
+                    <form method="post" action="{% url 'eliminar_producto' producto_id=producto.id_producto %}">
+                        {% csrf_token %}
+                        <button type="submit">Eliminar</button>
+                    </form>
+                    <form method="post" action="{% url 'actualizar_cantidad' producto_id=producto.id_producto %}">
+                        {% csrf_token %}
+                        <input type="number" name="cantidad" value="{{ producto.cantidad }}" min="1">
+                        <button type="submit">Actualizar cantidad</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p>No tienes productos en el carrito.</p>
+        {% endif %}
+    </div>
+
+    <div class="costo-total">
+        <p><strong>Total: RD ${{ total }}</strong></p>
+        <button type="button" onclick="metodoPago()">Ir a pagar</button>
+    </div>
+</div>
+{% endblock %}

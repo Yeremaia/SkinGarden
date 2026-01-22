@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es-DO">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Skin Garden, el jardin que cuida tu piel podras encontrar todas las variedades de productos para el cuidado de tu piel.">
+    <meta name="keywords" content="Skin Garden, productos para la piel, limpiadores, hidratacion de cuerpo, hidratacion de rostro">
+    <link rel="icon" href="{% static 'SkinGardenContent/imagenes/logo-banners/planta-logo.png' %}">
+    <link rel="stylesheet" href="{% static 'SkinGardenContent/css/estilos.css' %}">
+    <script src="{% static 'SkinGardenContent/js/funciones.js' %}"></script>
+    <title>Categoría - Anti-imperfecciones</title>
+</head>
+<body>
+    <div class="contenedor">
+        <header>
+           <!-- Menu (3 rayitas) -->
+            <div class="izquierda-header">
+                <figure class="logo-menu">
+                    <img src="{% static 'SkinGardenContent/imagenes/iconos/tresBarras-menu.png' %}" alt="menu" title="Menú" onclick="abrirMenu()">
+                </figure>
+                <!-- Logo -->
+                <a href="{% url 'inicio/invitado' %}">
+                    <figure class="logo">
+                        <img src="{% static 'SkinGardenContent/imagenes/logo-banners/header-menu-logo.png' %}" alt="Logo de Skin Garden" title="Logo de Skin Garden">
+                    </figure>
+                </a>
+            </div>
+            
+            <!-- Caja de busqueda -->
+            <div class="busqueda" onclick="cerrarMenuAbierto(), cerrarCarritoCompra()">
+                <div class="conjunto-lupa">
+                    <img src="{% static 'SkinGardenContent/imagenes/iconos/lupa.png' %}" alt="lupa" class="lupa" onclick="agrandarBuscador()">
+                    <form id="buscador-form" onsubmit="procesarBusquedaInvitado(event)">
+                        <div class="responsive-busqueda">
+                            <input type="search" name="buscar" id="buscar" title="Busqueda" placeholder="Buscar..." list="sugerencias" onclick="agrandarBuscador()">
+                            <!-- Lista de sugerencias -->
+                            <datalist id="sugerencias">
+                                <option value="Hidratación Rostro">
+                                <option value="Novedades">
+                                <option value="Limpiadores">
+                                <option value="Anti-Imperfecciones">
+                                <option value="Nuevo">
+                                <option value="Hidratación Cuerpo">
+                            </datalist>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Carrito de compras -->
+            <div class="derecha-header" onclick="cerrarMenuAbierto()">
+                <figure onclick="Aviso()">
+                    <img src="{% static 'SkinGardenContent/imagenes/iconos/carrito-Compras.png' %}" alt="Logo de Carrito de compras" title="Logo de Carrito de compras">
+                    <figcaption class="cantidad-carrito-compras">0</figcaption>
+                </figure>
+            </div>
+            <!-- 
+                =============================================================================================
+                IMPORTATE: esto es para ponerlo en el html y con css ocultarlo, para luego con JavaScript al darle al menu te muestre esto.
+                =============================================================================================
+            -->
+            <div class="menu-abierto">
+                <figure class="logo-menu">
+                    <img src="{% static 'SkinGardenContent/imagenes/iconos/tresBarras-menu.png' %}" alt="Logo menu" title="Logo menu" onclick="cerrarMenuAbierto()">
+                </figure>
+                <!-- Enlaces del menu - Inicio -->
+                <div class="nav-inicio">
+                    <a href="{% url 'inicio/invitado' %}" onclick="cerrarMenuAbierto()">
+                        <figure>
+                            <img src="{% static 'SkinGardenContent/imagenes/iconos/boton-home.png' %}" alt="Icono de Inicio" title="Icono de Inicio">
+                            <figcaption>Inicio</figcaption>
+                        </figure>
+                    </a>
+                </div>
+                <!-- Enlaces del menu - Categorias -->
+                <div class="nav-categoria">
+                    <figure>
+                        <img src="{% static 'SkinGardenContent/imagenes/iconos/boton-categorias.png' %}" alt="Icono de Categoría" title="Icono de Categoría">
+                        <figcaption>Categoría</figcaption>
+                    </figure>
+                    <ul>
+                        <li><a href="{% url 'hidratacionRostro/invitado' %}">Hidratación de rostro</a></li>
+                        <li><a href="{% url 'limpiadores/invitado' %}">Limpiadores</a></li>
+                        <li><a href="{% url 'crema/invitado' %}">Anti-imperfecciones</a></li>
+                        <li><a href="{% url 'hidratacionCuerpo/invitado' %}">Hidratación de cuerpo</a></li>
+                    </ul>
+                </div>
+                <div class="nav-novedades">
+                    <a href="{% url 'novedades/invitado' %}">
+                        <figure>
+                            <img src="{% static 'SkinGardenContent/imagenes/iconos/boton-novedades.png' %}" alt="Icono de Novedades" title="Icono de Novedades">
+                            <figcaption>Novedades</figcaption>
+                        </figure>
+                    </a>
+                </div>
+                <!-- En el futuro se vera como se hara esta parte -->
+                <div class="nav-carrito-compras">
+                    <a href="#">
+                        <figure onclick="Aviso()">
+                            <img src="{% static 'SkinGardenContent/imagenes/iconos/carrito-Compras.png' %}" alt="Icono de Carrito de compras" title="Icono de Carrito de compras">
+                            <figcaption>Carrito de compras</figcaption>
+                        </figure>
+                    </a>
+                </div>
+                <div class="nav-cerrar-sesion">
+                    <a href="{% url 'inicio_sesion' %}">
+                        <figure>
+                            <img src="{% static 'SkinGardenContent/imagenes/iconos/cerrar-sesion.png' %}" alt="Icono de Iniciar Sesión" title="Icono de Iniciar Sesión">
+                            <figcaption>Iniciar Sesión</figcaption>
+                        </figure>
+                    </a>
+                </div>
+            </div>
+        </header>
+        <nav onclick="cerrarMenuAbierto()" class="responsive-main">
+            <div class="raya-titulo">
+                <h2 class="titulo-categorias">Categorías</h2>
+            </div>
+            <a href="#" onclick="regresarAtras()">
+                <img src="{% static 'SkinGardenContent/imagenes/iconos/volver-atras.png' %}" alt="Volver atras" class="volver-atras" title="Volver Atras">
+            </a>
+            <ul>
+                <li><a href="{% url 'hidratacionRostro/invitado' %}">Hidratación Rostro</a></li>
+                <li><a href="{% url 'hidratacionCuerpo/invitado' %}">Hidratación Cuepo</a></li>
+                <li><a href="{% url 'limpiadores/invitado' %}">Limpiadores</a></li>
+                <li><a href="#" class="color-menu-categoria">Anti-Imperfecciones</a></li>
+            </ul>
+        </nav>    
+        <main onclick="cerrarMenuAbierto(), cerrarCarritoCompra(), encojerBuscador()">
+            <section class="anti-imperfecciones">
+                <div class="filasP">
+                    {% for ver in crema %}
+                        <div class="bgCajas responsiveCajas">
+                            {% comment %} Modificar la imagen {% endcomment %}
+                            <img src="{% static 'SkinGardenContent/imagenes/iconos/añadir-carrito.png' %}" alt="frame" class="addCarrito" onclick="Aviso()">
+                            {% comment %} Condicion para verificar si el producto es old o new (se verifica por el estado), si es new mostrara la barra de descuento arriba del producto {% endcomment %}
+                            {% if ver.estado == "new" %}
+                                <p class="discount">-80%</p>
+                            {% endif %}
+                            <figure class="figureCaja">
+                                <a href="{% url 'producto/invitado' producto_id=ver.id_productos %}" class="links">
+                                    {% if ver.imagen %}
+                                        <img src="{{ ver.imagen.url }}" alt="{{ ver.nom_producto }}" class="imagenesP" title="{{ ver.nom_producto }}">
+                                    {% else %}
+                                        <img src="{% static 'SkinGardenContent/imagenes/productos/img-default.jpg' %}" alt="Imagen no disponible" class="imagenesP">
+                                    {% endif %}
+                                </a>
+                            </figure>
+                            <div class="productInfo">
+                                <h2 class="productName">{{ ver.nom_producto }}</h2>
+                                <p class="infoProduct">{{ ver.descripcion }}</p>
+                            </div>
+                            <div class="ofertas-p">
+                                {% if ver.totalDescuento != ver.precio %}
+                                    <p class="antiguoP">RD$ {{ ver.precio }}</p>
+                                    <p class="nuevoP">RD$ {{ ver.totalDescuento }}</p> 
+                                {% else %}
+                                    <p class="precio">RD$ {{ ver.precio }}</p>
+                                {% endif %}
+                            </div>
+                            <figure class="qualyRates">
+                                <p>{{ ver.calificacion }}</p>
+                            </figure>                  
+                        </div>
+                    {% empty %}
+                        <p>No hay productos en esta categoria.</p>
+                    {% endfor %}
+                </div>
+            </section>
+        </main>
+        <footer>
+            <p>&copy; Todos los derechos reservados por Skin Garden - 2024</p>
+        </footer>
+    </div> 
+</body>
+</html>

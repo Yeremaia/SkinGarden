@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es-DO">
+{% block content %}
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Skin Garden, el jardin que cuida tu piel podras encontrar todas las variedades de productos para el cuidado de tu piel.">
+    <meta name="keywords" content="Skin Garden, productos para la piel, limpiadores, hidratacion de cuerpo, hidratacion de rostro">
+    <title>Inicio de sesion</title>
+    <link rel="stylesheet" href="{% static 'SkinGardenContent/css/estilos.css' %}">
+    <script src="{% static 'SkinGardenContent/js/funciones.js' %}"></script>
+    <link rel="icon" href="{% static 'SkinGardenContent/imagenes/logo-banners/planta-logo.png' %}?v=1">
+</head>
+<body class="cuerpo-contraseña">
+    <!-- Formulario de iniciar sesion -->
+    <form class="form" method="post" action="{% url 'inicio_sesion' %}">
+        {% csrf_token %}
+        <img id="img" src="{% static 'SkinGardenContent/imagenes/iconos/usuario.png' %}" width="30%" alt="">
+        <h1 class="titulo-contraseña">Inicio de Sesion</h1>
+        
+        <!-- Mensaje de error -->
+        {% if messages %}
+            <div id="mensaje" class="mensaje">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        <!-- Nombre de usuario -->
+        <label for="usuario"></label>
+        <input name="usuario" type="text" id="usuario" placeholder="Nombre.." size="30" autofocus required class="input-form">
+        
+        <!-- Contraseña -->
+        <label for="contraseña"></label>
+        <input name="contraseña" type="password" id="contraseña" placeholder="Contraseña.." size="30" required class="input-form">
+        
+        <!-- Botón de olvidar contraseña -->
+        <a class="pasword" href="{% url 'verificar_correo' %}" id="contrasena">¿Olvido su contraseña?</a>
+        
+        <!-- Botón de mostrar y ocultar contraseña -->
+        <button type="button" class="boton-pass" onclick="Mostrar()" title="Mostrar/Ocultar">
+            <img src="{% static 'SkinGardenContent/imagenes/iconos/pasword.png' %}" class="pass" alt="">
+        </button>
+        
+        <!-- Botón de iniciar sesión -->
+        <button class="boton" type="submit">Iniciar</button>
+        
+        <h5 class="subtitulo2">Continuar con</h5>
+        <!-- Iconos para iniciar sesión con Gmail, Facebook y Outlook -->
+        <div class="iconos">
+            <a href="https://www.google.com/intl/es/gmail/about/"><img src="{% static 'SkinGardenContent/imagenes/iconos/apps/gmail.png' %}" width="7%" alt="" title="Gmail"></a>
+            <a href="https://www.facebook.com"><img src="{% static 'SkinGardenContent/imagenes/iconos/apps/facebook.png' %}" width="7%" alt="" title="Facebook"></a>
+            <a href="https://outlook.live.com"><img src="{% static 'SkinGardenContent/imagenes/iconos/apps/outlook-icon.png' %}" width="7%" alt="" title="Outlook"></a>
+        </div>
+        
+        <!-- Opción de crear cuenta -->
+        <h5 class="subtitulo2">¿No tienes cuenta?</h5>
+        <a href="{% url 'crear_cuenta' %}" class="nuevo">Crear cuenta</a>
+        
+        <div class="entrar-invitado">
+            <a href="{% url 'inicio/invitado' %}" class="invitado">Entrar como invitado</a>
+        </div>
+    </form>
+</body>
+{% endblock %}
+</html>

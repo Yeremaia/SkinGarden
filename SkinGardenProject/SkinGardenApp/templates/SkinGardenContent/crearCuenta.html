@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es-DO">
+{% block content %}
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Skin Garden, el jardin que cuida tu piel podras encontrar todas las variedades de productos para el cuidado de tu piel.">
+    <meta name="keywords"
+        content="Skin Garden, productos para la piel, limpiadores, hidratacion de cuerpo, hidratacion de rostro">
+    <title>Crear cuenta</title>
+    <link rel="stylesheet" href="{% static 'SkinGardenContent/css/estilos.css' %}">
+    <link rel="icon" href="{% static 'SkinGardenContent/imagenes/logo-banners/planta-logo.png' %}">
+    <script src="{% static 'SkinGardenContent/js/funciones.js' %}"></script>
+</head>
+
+<body class="cuerpo-contraseña">
+    <!-- Formulario crear cuenta-->
+    <form class="form" method="post" action="{% url 'crear_cuenta' %}">
+        {% csrf_token %}
+        <img class="form-crear-cuenta" src="{% static 'SkinGardenContent/imagenes/iconos/crearcuenta.png' %}"
+            width="20%" alt="">
+        <h1 class="titulo-contraseña">Crear cuenta</h1>
+
+        {% if messages %}
+        <div id="mensaje" class="mensaje">
+            {% for message in messages %}
+            <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Nombre -->
+        <label for="nombre"></label>
+        <input type="text" name="nom_usuario" id="nombre" placeholder="Nombre" required class="input-form">
+
+        <!-- Apellido -->
+        <label for="apellido"></label>
+        <input type="text" name="ape_usuario" id="apellido" placeholder="Apellido" required class="input-form">
+
+        <!-- Correo electrónico -->
+        <label for="correo"></label>
+        <input type="email" name="correo_usuario" id="correo" placeholder="Correo electrónico" required
+            class="input-form">
+
+        <!-- Teléfono -->
+        <label for="telefono"></label>
+        <input type="text" name="tel_usuario" id="telefono" placeholder="Teléfono" required class="input-form">
+
+        <!-- Nombre de usuario -->
+        <label for="usuario"></label>
+        <input type="text" name="user_usuario" id="usuario" placeholder="Nombre de usuario" required class="input-form">
+
+        <!-- Contraseña -->
+        <label for="contraseña"></label>
+        <input type="password" name="pwd_usuario" id="contraseña" placeholder="Contraseña" required class="input-form">
+
+        <button class="pass-crear crear-contra-pass" type="button" onclick="Mostrar()">
+            <img src="{% static 'SkinGardenContent/imagenes/iconos/pasword.png' %}" class="pass">
+        </button>
+
+        <!-- Confirmar contraseña -->
+        <label for="confirmarContraseña"></label>
+        <input type="password" name="confirmarContraseña" id="confirmarContraseña" placeholder="Confirmar contraseña"
+            required class="input-form">
+
+        <!-- Dirección -->
+        <label for="direccion"></label>
+        <input type="text" name="dir_usuario" id="direccion" placeholder="Dirección" required class="input-form">
+
+        <!-- Botón de crear cuenta -->
+        <button class="boton" type="submit">Crear</button>
+
+        <!-- Botón de volver atrás -->
+        <a class="atras" href="{% url 'inicio_sesion' %}">Volver</a>
+    </form>
+</body>
+{% endblock %}
+
+</html>
+
+

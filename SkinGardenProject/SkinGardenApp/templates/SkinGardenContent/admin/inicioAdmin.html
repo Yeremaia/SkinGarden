@@ -1,0 +1,85 @@
+
+{% extends "SkinGardenContent/admin/EncabezadoAdmin.html" %}
+
+{% load static %}
+
+
+{% block content %}
+        <!-- ============================================================================================ -->
+        <main onclick="cerrarMenuDesarrollador(), cerrarMenuAbierto(), cerrarCarritoCompra()">
+            <!-- productos con las imagenes y nombres de inico parte superior -->
+            <!-- Nuevo contenedor agregado  -->
+            <div class="contenido-inicio responsive-main">
+                <section class="productos-inicio">
+                    <!-- este div es un boton para deslizar -->
+                    <button class="scroll-button-scroll-left-inicio" onclick="desplazarIzquierda()"> « </button>
+                    {% for ver in inicio %}
+                            <div class="imagenes-productos-inicio">
+                                <a href="{% url 'productoAdmin/admin' producto_id=ver.id_productos %}">
+                                    <figure class="imagenes-productos-inicio1">
+                                        {% if ver.imagen %}
+                                            <img class="productos-inicio-imagen" src="{{ ver.imagen.url }}" alt="{{ ver.nom_producto }}" title="{{ ver.nom_producto }}">
+                                        {% else %}
+                                            <img class="productos-inicio-imagen" src="{% static 'SkinGardenContent/imagenes/productos/img-default.jpg' %}" alt="Imagen no disponible">
+                                        {% endif %}
+                                        <figcaption class="nombre-producto-inicio1">{{ ver.nom_producto }}</figcaption>
+                                    </figure>
+                                </a>
+                            </div>
+                    {% endfor %}
+
+                    <!-- este div es un boton para deslizar -->
+                    <button class="scroll-button-scroll-right-inicio" onclick="desplazarDerecha()"> » </button>
+                </section>
+            </div>
+            <!-- ------------------------------------------------------------------------------------ -->
+            <!-- categoria pagina de inico parte inferior -->
+            <section class="categoria-inferior-inicio">
+                <div id="contenedor-inferior-inicio">
+        
+                    <div class="imagenes-anchos-primera-parte">
+                        <div class="categorias-inicio">
+                            <a href="{% url 'hidratacionRostroAdmin/admin' %}">
+                                <figure class="imagenes-categoria-inicio1">
+                                    <img class="categoria-imagen-inicio1" src="{% static 'SkinGardenContent/imagenes/fondos/hidrata-facial.png' %}"
+                                        alt="hidrata-facial">
+                                    <h2 class="nombre-categoria-inicio1">Hidratación Rostro</h2>
+                                </figure>
+                            </a>
+                        </div>
+        
+                        <div class="categorias-inicio">
+                            <a href="{% url 'cremaAdmin/admin' %}">
+                                <figure class="imagenes-categoria-inicio4">
+                                    <img class="categoria-imagen-inicio4" src="{% static 'SkinGardenContent/imagenes/fondos/anti-imperfecciones.png' %}"
+                                        alt="Crema para ojos">
+                                    <h2 class="nombre-categoria-inicio4">Anti-imperfecciones</h2>
+                                </figure>
+                            </a>
+                        </div>
+                    </div>
+        
+                    <div class="imagenes-anchos-inicio">
+                        <div class="categorias-inicio">
+                            <a href="{% url 'hidratacionCuerpoAdmin/admin' %}">
+                                <figure class="imagenes-categoria-inicio2">
+                                    <img class="categoria-imagen-inicio2" src="{% static 'SkinGardenContent/imagenes/fondos/hidrata-corporal.png' %}"
+                                        alt="hidrata-corporal">
+                                    <h2 class="nombre-categoria-inicio2">Hidratación de Cuerpo</h2>
+                                </figure>
+                            </a>
+                        </div>
+                        <div class="categorias-inicio">
+                            <a href="{% url 'limpiadoresAdmin/admin' %}">
+                                <figure class="imagenes-categoria-inicio3">
+                                    <img class="categoria-imagen-inicio3" src="{% static 'SkinGardenContent/imagenes/fondos/fondo-limpiadores.png' %}"
+                                        alt="limpiadores">
+                                    <h2 class="nombre-categoria-inicio3">Limpiadores</h2>
+                                </figure>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+{% endblock %}

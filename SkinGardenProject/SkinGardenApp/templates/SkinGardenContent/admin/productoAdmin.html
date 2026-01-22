@@ -1,0 +1,103 @@
+{% extends "SkinGardenContent/admin/EncabezadoAdmin.html" %}
+
+{% load static %}a
+
+{% block content %}
+        <main onclick="cerrarMenuAbierto(), cerrarCarritoCompra()" class="responsive-main">
+            <section class="Compra">
+                <article>
+                    <a href="#"><img src="{% static 'SkinGardenContent/imagenes/iconos/volver-atras.png' %}" class="Atras" alt="" onclick="regresarAtras()"></a>
+                </article>
+                    <div class="informacion-superior-producto">
+                        <h5 class="categoria-producto">Categoria: <strong class="categoria-producto-info">{{ obtener.id_categoria.nom_categoria }}</strong></h5>
+                    </div>
+                    {% if obtener.imagen %}
+                        <img src="{{ obtener.imagen.url }}" alt="{{ obtener.nom_producto }}" class="image" title="{{ obtener.nom_producto }}" width="100%">
+                    {% else %}
+                        <img class="image" src="{% static 'SkinGardenContent/imagenes/productos/img-default.jpg' %}" alt="Imagen no disponible" width="100%">
+                    {% endif %}
+                    <article class="Selec">
+                        <h2 class="Titulo">{{ obtener.nom_producto }}</h2>
+                        <h3 class="subtitulos">Precio<b class="monto-articulo">
+                            {% if obtener.totalDescuento != productos.precio %}
+                                RD$ {{ obtener.totalDescuento }}
+                            {% else %}
+                                RD$ {{ obtener.precio }}
+                            {% endif %}
+                        </b></h3>
+                        <hr class="linea2">
+                        <h3  class="subtitulos">Cantidad</h3>
+                        <div class="contador">
+                            <div class="counter">
+                                <button class="decrement" onclick="Eliminar()">−</button>
+                                <!-- Este input esta tipo telefono, pero solo es de prueba sera modificado a futuro -->
+                                <input type="number"  class="count" id="count" value="1" min="0" step="1">
+                                <button class="increment" onclick="Añadir()">+</button>
+                            </div>
+                        </div> 
+                        <hr class="linea2"> 
+                        <h3 class="subtitulos-clasificacion">Calificación</h3>
+                        <button  class="boton-clasificar" onclick="clasificar()" >Calificar</button>
+                        <div class="Clasificacion">
+                            <div >
+                                <p id="rating-display"><span id="average-rating">☆☆☆☆☆</span></p>
+                            </div>
+                        </div>
+                        <hr class="linea2">
+                        <h3  class="subtitulos">Descripcion <button  class="boton-descripcion2" onclick="Ocultardescripcion()">Ocultar ▲</button><button class="boton-descripcion" id="boton-descripcion" onclick="descripcion()">Mostrar ▼</button></h3>
+                        
+                        <p class="description">{{ obtener.descripcion }}</p>
+                            <div class="rating-container">
+                                <h2>¡Danos tu calificación!</h2>
+                                <div class="rating" id="rating">
+                                    <span class="star" data-value="1">&#9733;</span>
+                                    <span class="star" data-value="2">&#9733;</span>
+                                    <span class="star" data-value="3">&#9733;</span>
+                                    <span class="star" data-value="4">&#9733;</span>
+                                    <span class="star" data-value="5">&#9733;</span>
+                                </div>
+                                <button class="boton-finalizar" onclick="FinalizarCalificacion()">Finalizar</button>
+                            </div>
+                        <button class="Boton2" onclick="metodoPago()">Compra ahora</button>
+                        <button class="Boton" onclick="agregarAlCarrito()"><img class="buy" src="{% static 'SkinGardenContent/imagenes/iconos/agregar-carrito.png' %}"  alt=""></button>
+                        <h5 class="fecha">Agregado: <a class="fecha-info">{{ obtener.fecha_pub }}</a></h5>
+                    </article>
+            </section>
+            <section class="contenedor-relacionado">
+                <h3 class="relacionados">Relacionados</h3>
+                <hr class="linea">
+                <button class="scroll-button-scroll-right" onclick="Derecha()"> » <p>Siguente</p></button>
+                <button class="scroll-button-scroll-left" onclick="Izquierda()"> « <p>Anterior</p></button>
+
+                <div class="filas-Producto" id="filas-Producto">
+                    {% for visualizar in relacionando %}
+                        <div class="bgCajas-producto">
+                            <img src="{% static 'SkinGardenContent/imagenes/iconos/añadir-carrito.png' %}" alt="frame" class="addCarrito">
+                            <figure class="figureCaja">
+                                <a href="{% url 'productoAdmin/admin' producto_id=visualizar.id_productos %}" class="links">
+                                    {% if visualizar.imagen %}
+                                        <img src="{{ visualizar.imagen.url }}" alt="{{ visualizar.nom_producto }}" class="imagenesP" title="{{ visualizar.nom_producto }}">
+                                    {% else %}
+                                        <img class="imagenesP" src="{% static 'SkinGardenContent/imagenes/productos/img-default.jpg' %}" alt="Imagen no disponible">
+                                    {% endif %}
+                                </a>
+                            </figure>
+                            <div class="productInfo">
+                                <h2 class="productName">{{ visualizar.nom_producto }}</h2>
+                                <p class="infoProduct">{{ visualizar.descripcion }}</p>
+                                <div class="ofertas-p">
+                                    <p class="precio">RD$ {{ visualizar.precio }}</p>
+                                    {% if visualizar.totalDescuento != visualizar.precio %}
+                                        <p class="nuevoP">RD$ {{ visualizar.totalDescuento }}</p> 
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <figure class="qualyRates">
+                                <p>{{ visualizar.calificacion }}</p>
+                            </figure>
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+        </main>
+{% endblock %}

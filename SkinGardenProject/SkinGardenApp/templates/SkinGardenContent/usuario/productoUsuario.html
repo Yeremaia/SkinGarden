@@ -1,0 +1,116 @@
+{% extends "SkinGardenContent/usuario/encabezado.html" %}
+
+{% load static %}
+
+
+{% block content %}
+        <main onclick="cerrarMenuAbierto(), cerrarCarritoCompra(), encojerBuscador()" class="responsive-main">
+            <section class="Compra">
+                <article>
+                    <a href="#"><img src="{% static 'SkinGardenContent/imagenes/iconos/volver-atras.png' %}" class="Atras" alt="" onclick="regresarAtras()"></a>
+                </article>
+                    <div class="informacion-superior-producto">
+                        <h5 class="categoria-producto">Categoria: <strong class="categoria-producto-info">{{ obtener.id_categoria.nom_categoria }}</strong></h5>
+                    </div>
+                    <img class="image" src="{{ obtener.imagen.url }}"  alt="{{ obtener.nom_producto }}" width="100%" title="{{ obtener.nom_producto }}">
+                    <article class="Selec">
+                        <h2 class="Titulo">{{ obtener.nom_producto }}</h2>
+                        <h3 class="subtitulos">Precio<b class="monto-articulo">
+                            {% if obtener.totalDescuento != productos.precio %}
+                                RD$ {{ obtener.totalDescuento }}
+                            {% else %}
+                                RD$ {{ obtener.precio }}
+                            {% endif %}
+                        </b></h3>
+                        <hr class="linea2">
+                        <h3  class="subtitulos">Cantidad</h3>
+                        <div class="contador">
+                            <div class="counter">
+                                <button class="decrement" onclick="Eliminar()">−</button>
+                                <input type="number" class="count" id="count" value="1" min="0" step="1">
+                                <button class="increment" onclick="Añadir()">+</button>
+                            </div>
+                        </div>
+                        <hr class="linea2"> 
+                        <h3 class="subtitulos-clasificacion">Calificación</h3>
+                        <button  class="boton-clasificar" onclick="clasificar()" >Calificar</button>
+                        <div class="Clasificacion">
+                            <div >
+                                <p id="rating-display"><span id="average-rating">{{ obtener.calificacion }}</span></p>
+                            </div>
+                        </div>
+                        <hr class="linea2">
+                        <h3  class="subtitulos">Descripcion <button  class="boton-descripcion2" onclick="Ocultardescripcion()">Ocultar ▲</button><button class="boton-descripcion" id="boton-descripcion" onclick="descripcion()">Mostrar ▼</button></h3>
+                        
+                        <p class="description">{{ obtener.descripcion }}</p>
+                            <div class="rating-container">
+                                <h2>¡Danos tu calificación!</h2>
+                                <div class="rating" id="rating">
+                                    <span class="star" data-value="1">&#9733;</span>
+                                    <span class="star" data-value="2">&#9733;</span>
+                                    <span class="star" data-value="3">&#9733;</span>
+                                    <span class="star" data-value="4">&#9733;</span>
+                                    <span class="star" data-value="5">&#9733;</span>
+                                </div>
+                                <button class="boton-finalizar" onclick="FinalizarCalificacion()">Finalizar</button>
+                            </div>
+                        <button class="Boton2" onclick="metodoPago()">Compra ahora</button>
+                        <form class="form-buy" action="{% url 'agregar_al_carrito' producto_id=obtener.id_productos %}" method="post" id="form-agregar-al-carrito">
+                            {% csrf_token %}
+                            <input type="hidden" name="cantidad" id="cantidad_input" value="1">
+                            <!-- Campo para la cantidad -->
+                            <button type="submit" class="Boton">
+                                <img class="buy" src="{% static 'SkinGardenContent/imagenes/iconos/agregar-carrito.png' %}" onclick="agregarAlCarrito()"
+                                    alt="Agregar al carrito">
+                            </button>
+                        </form>
+                        <h5 class="fecha">Agregado: <a class="fecha-info">{{ obtener.fecha_pub }}</a></h5>
+                    </article>
+            </section>
+            <section class="contenedor-relacionado">
+                <h3 class="relacionados">Relacionados</h3>
+                <hr class="linea">
+                <button class="scroll-button-scroll-right" onclick="Derecha()"> » <p>Siguente</p></button>
+                <button class="scroll-button-scroll-left" onclick="Izquierda()"> « <p>Anterior</p></button>
+
+                <div class="filas-Producto" id="filas-Producto">
+                    {% for visualizar in relacionando %}
+                    <div class="bgCajas-producto">
+                        <!-- Formulario para agregar al carrito -->
+                        <form action="{% url 'actualizar_cantidad' producto_id=visualizar.id_productos %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-agregar"><img src="{% static 'SkinGardenContent/imagenes/iconos/añadir-carrito.png' %}" alt="frame" class="addCarrito"></button>
+                            
+                
+                            <figure class="figureCaja">
+                                <a href="{% url 'producto/usuario' producto_id=visualizar.id_productos %}" class="links">
+                                    <img src="{{ visualizar.imagen.url }}" alt="visualizar.nom_producto" class="imagenes-producto" title="visualizar.nom_producto">
+                                </a>
+                            </figure>
+                
+                            <div class="productInfo">
+                                <h2 class="productName">{{ visualizar.nom_producto }}</h2>
+                                <p class="infoProduct">{{ visualizar.descripcion }}</p>
+                                <div class="ofertas-p">
+                                    <p class="precio">RD$ {{ visualizar.precio }}</p>
+                                    {% if visualizar.totalDescuento != visualizar.precio %}
+                                    <p class="nuevoP">RD$ {{ visualizar.totalDescuento }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                
+                            <figure class="qualyRates">
+                                <p>{{ visualizar.calificacion }}</p>
+                            </figure>
+                
+                            <!-- Campo oculto para cantidad (valor predeterminado a 1) -->
+                            <input type="hidden" name="cantidad" value="1">
+                
+                            
+                        </form>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+        </main>
+{%  endblock %}

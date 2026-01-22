@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es-DO">
+{% block content %}
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Skin Garden, el jardin que cuida tu piel podras encontrar todas las variedades de productos para el cuidado de tu piel.">
+    <meta name="keywords"
+        content="Skin Garden, productos para la piel, limpiadores, hidratacion de cuerpo, hidratacion de rostro">
+    <title>Verificación</title>
+    <link rel="stylesheet" href="{% static 'SkinGardenContent/css/estilos.css' %}">
+    <link rel="icon" href="{% static 'SkinGardenContent/imagenes/logo-banners/planta-logo.png' %}">
+    <script src="{% static 'SkinGardenContent/js/funciones.js' %}"></script>
+</head>
+
+<body class="cuerpo-contraseña">
+    <!-- Formulario de recuperación -->
+    <form class="form" method="POST" action="{% url 'verificar_codigo' %}">
+        {% csrf_token %}
+        <img id="img" src="{% static 'SkinGardenContent/imagenes/iconos/recuperarcontra.png' %}" width="30%" alt="">
+        <h1 class="titulo-contraseña">Recuperación</h1>
+        <h4 class="subtitulo3">Les hemos enviado un código a su correo o teléfono. Ingresa el código para continuar.
+        </h4>
+
+        <!-- Mensajes de error o éxito -->
+        {% if messages %}
+        <div id="mensaje" class="mensaje">
+            {% for message in messages %}
+            <p style="text-align: center;">{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Input para el código -->
+        <label for="Recuperacion"></label>
+        <input type="text" name="codigo" id="Recuperacion" placeholder="0 0 0 - 0 0 0" size="30" autofocus
+            class="input-form" required>
+
+        <!-- Botón para verificar -->
+        <button class="boton" type="submit">Verificar</button>
+
+        <!-- Botón de volver atrás -->
+        <a class="atras" href="{% url 'verificar_correo' %}">Volver</a>
+    </form>
+</body>
+{% endblock %}
+
+</html>

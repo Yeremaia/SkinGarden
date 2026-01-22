@@ -1,0 +1,328 @@
+<html lang="es-DO">
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Skin Garden, el jardin que cuida tu piel podras encontrar todas las variedades de productos para el cuidado de tu piel.">
+    <meta name="keywords" content="Skin Garden, productos para la piel, limpiadores, hidratacion de cuerpo, hidratacion de rostro">
+    <link rel="icon" href="{% static 'SkinGardenContent/imagenes/logo-banners/planta-logo.png' %}">
+    <link rel="stylesheet" href="{% static 'SkinGardenContent/css/estilos.css' %}">
+    <title>Admin</title>
+    {% comment %} Esto es para redireccionar en el buscador {% endcomment %}
+    <script>
+        const urls = {
+            cremaAdmin: "{% url 'cremaAdmin/admin' %}",
+            hidratacionCuerpoAdmin: "{% url 'hidratacionCuerpoAdmin/admin' %}",
+            hidratacionRostroAdmin: "{% url 'hidratacionRostroAdmin/admin' %}",
+            limpiadoresAdmin: "{% url 'limpiadoresAdmin/admin' %}",
+            newNovedadesAdmin: "{% url 'newNovedadesAdmin/admin' %}",
+            novedadesAdmin: "{% url 'novedadesAdmin/admin' %}"
+        };
+    </script>
+</head>
+
+<body>
+    <div class="contenedor">
+        <header>
+            <!-- Menu (3 rayitas) -->
+            <div class="izquierda-header" onclick="cerrarMenuDesarrollador(), cerrarCarritoCompra()">
+                <figure class="logo-menu">
+                    <img src="{% static 'SkinGardenContent/imagenes/iconos/tresBarras-menu.png' %}" alt="menu" title="Menú" onclick="abrirMenu()">
+                </figure>
+                <!-- Logo -->
+                <a href="{% url 'inicio/admin' %}">
+                    <figure class="logo">
+                        <img src="{% static 'SkinGardenContent/imagenes/logo-banners/header-menu-logo.png' %}" alt="Logo de Skin Garden"
+                            title="Logo de Skin Garden">
+                    </figure>
+                </a>
+            </div>
+
+            <!-- Caja de busqueda -->
+            <div class="busqueda" onclick="cerrarMenuAbierto(), cerrarCarritoCompra()">
+                <div class="conjunto-lupa">
+                    <img src="{% static 'SkinGardenContent/imagenes/iconos/lupa.png' %}" alt="lupa" class="lupa" onclick="agrandarBuscador()">
+                    <form id="buscador-form" onsubmit="procesarBusquedaAdmin(event)">
+                        <div class="responsive-busqueda">
+                            <input type="search" name="buscar" id="buscar" title="Busqueda" placeholder="Buscar..." list="sugerencias" onclick="agrandarBuscador()">
+                            <!-- Lista de sugerencias -->
+                            <datalist id="sugerencias">
+                                <option value="Hidratación Rostro">
+                                <option value="Novedades">
+                                <option value="Limpiadores">
+                                <option value="Anti-Imperfecciones">
+                                <option value="Nuevo">
+                                <option value="Hidratación Cuerpo">
+                            </datalist>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Carrito de compras -->
+            <div class="derecha-header" onclick="cerrarMenuAbierto()">
+                <figure>
+                    <img src="{% static 'SkinGardenContent/imagenes/iconos/carrito-Compras.png' %}" alt="Logo de Carrito de compras" title="Logo de Carrito de compras">
+                </figure>
+            </div>
+            <!-- Menu de desarrollador -->
+            <div class="menu-desarrollador">
+                <figure>
+                    <img src="{% static 'SkinGardenContent/imagenes/iconos/martillo.png' %}" alt="Logo del menu de desarrollador"
+                        title="Logo del menu de desarrollador"
+                        onclick="abrirMenuDesarrollador(), cerrarMenuAbierto(), cerrarCarritoCompra()">
+                </figure>
+            </div>
+            <!-- 
+                =============================================================================================
+                IMPORTATE: esto es para ponerlo en el html y con css ocultarlo, para luego con JavaScript al darle al menu te muestre esto.
+                =============================================================================================
+            -->
+            <div class="menu-abierto">
+                <figure class="logo-menu">
+                    <img src="{% static 'SkinGardenContent/imagenes/iconos/tresBarras-menu.png' %}" alt="Logo menu" title="Logo menu"
+                        onclick="cerrarMenuAbierto()">
+                </figure>
+                <!-- Enlaces del menu - Inicio -->
+                <div class="nav-inicio">
+                    <a href="{% url "inicio/admin" %}">
+                        <figure>
+                            <img src="{% static 'SkinGardenContent/imagenes/iconos/boton-home.png' %}" alt="Icono de Inicio" title="Icono de Inicio">
+                            <figcaption>Inicio</figcaption>
+                        </figure>
+                    </a>
+                </div>
+                <!-- Enlaces del menu - Categorias -->
+                <div class="nav-categoria">
+                    <figure>
+                        <img src="{% static 'SkinGardenContent/imagenes/iconos/boton-categorias.png' %}" alt="Icono de Categoría"
+                            title="Icono de Categoría">
+                        <figcaption>Categoría</figcaption>
+                    </figure>
+                    <ul>
+                        <li><a href="{% url 'hidratacionRostroAdmin/admin' %}">Hidratación de rostro</a></li>
+                        <li><a href="{% url 'limpiadoresAdmin/admin' %}">Limpiadores</a></li>
+                        <li><a href="{% url 'cremaAdmin/admin' %}">Anti-imperfecciones</a></li>
+                        <li><a href="{% url 'hidratacionCuerpoAdmin/admin' %}">Hidratación de cuerpo</a></li>
+                    </ul>
+                </div>
+                <div class="nav-novedades">
+                    <a href="{% url 'novedadesAdmin/admin' %}">
+                        <figure>
+                            <img src="{% static 'SkinGardenContent/imagenes/iconos/boton-novedades.png' %}" alt="Icono de Novedades"
+                                title="Icono de Novedades">
+                            <figcaption>Novedades</figcaption>
+                        </figure>
+                    </a>
+                </div>
+                <!-- En el futuro se vera como se hara esta parte -->
+                <div class="nav-carrito-compras">
+                    <a href="#">
+                        <figure onclick="cerrarMenuAbierto(),abrirCarritoCompra()">
+                            <img src="{% static 'SkinGardenContent/imagenes/iconos/carrito-Compras.png' %}" alt="Icono de Carrito de compras"
+                                title="Icono de Carrito de compras">
+                            <figcaption>Carrito de compras</figcaption>
+                        </figure>
+                    </a>
+                </div>
+                <div class="nav-cerrar-sesion">
+                    <a href="{% url 'cerrar_sesion' %}">
+                        <figure>
+                            <img src="{% static 'SkinGardenContent/imagenes/iconos/cerrar-sesion.png' %}" alt="Icono de Cerrar Sesión"
+                                title="Icono de Cerrar Sesión">
+                            <figcaption>Cerrar Sesión</figcaption>
+                        </figure>
+                    </a>
+                </div>
+            </div>
+            <!-- 
+                ================================================================================================
+                IMPORTANTE: Igual que el "menu-abierto", se ocultara con css y al darle click al carrito de compra aparecera de forma visible con javascript y css.
+                ================================================================================================
+            -->
+            <div class="carrito-abierto">
+                <div class="boton-cerrar-carrito-compra">
+                    <img src="{% static 'SkinGardenContent/imagenes/iconos/volver-atras.png' %}"
+                        alt="cerrar carrito de compra" onclick="cerrarCarritoCompra()">
+                </div>
+                <ul class="lista-productos">
+                    {% for producto in articulos %}
+                        <li>
+                            <div class="contenido-carrito-compras">
+                                <figure class="eliminar-producto-carrito">
+                                    <img src="{% static 'SkinGardenContent/imagenes/iconos/botonCerrar.png' %}"
+                                        alt="Eliminar Producto del carrito de compras"
+                                        title="Eliminar Producto del carrito de compras" onclick="eliminarProducto()">
+                                </figure>
+                                <!-- Enlace al producto con su ID -->
+                                <a href="{% url 'productoAdmin/admin' producto_id=producto.id_productos %}" class="enlace-producto-carrito-compra">
+                                    <figure class="productos-carrito-compra-abierto">
+                                        <img src="{% static 'SkinGardenContent/imagenes/productos/limpiadores/crema-espuma-hidratante.png' %}"
+                                            alt="Producto 1" title="Producto 1">
+                                    </figure>
+                                    <h4>{{ producto.nom_producto }}</h4>
+                                    <figure class="calificacion-carrito">
+                                        <img src="{% static 'SkinGardenContent/imagenes/iconos/estrellas/4-2Estrellas.png' %}" alt="">
+                                        <figcaption>{{ producto.id_productos.categorias }}</figcaption>
+                                    </figure>
+                                    <p>${{ producto.precio }}</p>
+                                </a>
+                                <div class="contador-padre-carrito-compras1">
+                                    <div class="contador">
+                                        <div class="counter contador-carrito-compras">
+                                            <button class="decrement" onclick="EliminarCantidad1()">−</button>
+                                            <input type="tel" class="count" id="count1" value="1">
+                                            <button class="increment" onclick="AñadirCantidad1()">+</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    {% empty %}
+                        <li>No tienes productos en el carrito.</li>
+                    {% endfor %}
+                </ul>
+                <!-- Costo total -->
+                <div class="costo-total">
+                    <p>Costo total: RD ${{ total }}</p>
+                    <button type="button" id="comprar-carrito-compras" onclick="metodoPago()">Comprar</button>
+                </div>
+            </div>
+            <!-- 
+                ================================================================================================
+                IMPORTANTE: Igual que el "menu-abierto", se ocultara con css y al darle click al carrito de compra aparecera de forma visible con javascript y css atravez del onclick y los getElement...
+                ================================================================================================
+            -->
+            <div class="menu-desarrollador-abierto">
+                <figure class="cerrar-menu-desarrollador">
+                    <img src="{% static 'SkinGardenContent/imagenes/iconos/botonCerrar.png' %}" alt="Cerrar Menu de Desarrollador"
+                        title="Cerrar Menu de Desarrollador" onclick="cerrarMenuDesarrollador()">
+                </figure>
+                <a href="{% url 'agregarProducto/admin' %}">
+                    <figure class="agregar-producto">
+                        <img src="{% static 'SkinGardenContent/imagenes/iconos/botonMas.png' %}" alt="Agregar producto" title="Agregar producto">
+                        <figcaption>Agregar Producto</figcaption>
+                    </figure>
+                </a>
+                <a href="{% url 'visualizarProducto/admin' %}">
+                    <figure class="visualizar-producto">
+                        <img src="{% static 'SkinGardenContent/imagenes/iconos/boton-novedades.png' %}" alt="Visualizar/Editar/Eliminar Producto"
+                            title="Visualizar/Editar/Eliminar Producto">
+                        <figcaption>Visualizar</figcaption>
+                    </figure>
+                </a>
+            </div>
+            <!-- 
+                ================================================================================================
+                IMPORTANTE: Igual que el "menu-abierto", se ocultara con css y al darle click a Comprar ahora o comprar aparecera de forma visible con javascript y css.
+                ================================================================================================
+            -->
+            <form class="metodo-pago-abierto">
+                <h3 class="titulo-pago">Datos de pago</h3>
+
+                <figure class="regresar-atras-pago">
+                    <img src="{% static 'SkinGardenContent/imagenes/iconos/volver-atras.png' %}" alt="Regresar Atras" title="Regresar Atras"
+                        onclick="cerrarMetodoPago()">
+                </figure>
+                <div class="opciones-pago">
+                    <h4>Elige una opción</h4>
+                    <div class="conjunto-pago-tarjeta" onclick="pagoTarjeta()">
+                        <div class="raya-input-pago">
+                            <input type="button" name="mastercard" id="mastercard">
+                        </div>
+                        <p>Pago con tarjeta</p>
+                        <img src="{% static 'SkinGardenContent/imagenes/iconos/apps/mastercard-icon.png' %}" alt="" class="img-paga1 img-paga">
+                        <img src="{% static 'SkinGardenContent/imagenes/iconos/apps/paypal-icon.png' %}" alt="" class="img-paga2 img-paga">
+                        <img src="{% static 'SkinGardenContent/imagenes/iconos/apps/visa-icon.png' %}" alt="" class="img-paga3 img-paga">
+                    </div>
+                    <div class="cojunto-pago-efectivo" onclick="pagoEfectivo()">
+                        <div class="raya-input-pago">
+                            <input type="button" name="efectivo" id="efectivo">
+                        </div>
+                        <p>Pago en efectivo</p>
+                    </div>
+                </div>
+                <div class="conjunto-formulario-pago">
+                    <div class="row-contenido-pago">
+                        <input type="email" name="email-tarjeta" id="email-tarjeta"
+                            placeholder="Ingrese el Correo Electronico" required>
+                    </div>
+                    <div class="row-contenido-pago">
+                        <input type="text" name="pais" id="pais" placeholder="Ingrese el pais" required>
+                    </div>
+                    <div class="row-contenido-pago">
+                        <input type="text" name="titular-tarjeta" id="titular-tarjeta"
+                            placeholder="Ingrese el nombre completo del titular" required>
+                    </div>
+                    <div class="row-contenido-pago">
+                        <input type="tel" name="numero-tarjeta" id="numero-tarjeta"
+                            placeholder="Ingrese el numero de tarjeta" required pattern="[0-9]+"
+                            title="Solo se permite numeros">
+                        <!-- El pattern es para que permita solo numeros y el signo de + es para que se pueda repetir ese mismo numero -->
+                    </div>
+                    <div class="mini-conjunto-pago">
+                        <div class="respondive-pago-tarjeta">
+                            <label for="mes-tarjeta" class="mes-tarjeta-label">Fecha de caducidad(MM):</label>
+                            <input type="month" name="mes-tarjeta" id="mes-tarjeta" required>
+                        </div>
+                        <div class="respondive-pago-tarjeta">
+                            <label for="codigo-tarjeta" class="codigo-tarjeta-label">Codigos de seguridad de la tarjeta
+                                (CVC2/CW2):</label>
+                            <input type="number" name="codigo-tarjeta" id="codigo-tarjeta" placeholder="0000"
+                                pattern="[0-9]{4}" required>
+                        </div>
+                    </div>
+                    <div class="boton-comprar-ahora-pago">
+                        <input type="submit" value="Pagar ahora" class="comprar-ahora-metodo-pago"
+                            onclick="comprobarCompra()">
+                    </div>
+                </div>
+                <div class="conjunto-formulario-pago-efectivo">
+                    <figure class="ubicacion-pago">
+                        <img src="{% static 'SkinGardenContent/imagenes/iconos/location.png' %}" alt="ubicacion" title="ubicacion">
+                        <figcaption>Av. Salvador Estrella Sadhalá 123, Santiago de los Caballeros 51000</figcaption>
+                    </figure>
+                    <figure class="nuestro-tel">
+                        <img src="{% static 'SkinGardenContent/imagenes/iconos/llamar.png' %}" alt="icono de telefono" title="Nuestro telefono">
+                        <figcaption>Nuestro teléfono: 829-656-9046</figcaption>
+                    </figure>
+                    <div class="row-conjunto-pago-efectivo">
+                        <div class="monto-pago-efectivo">
+                            <p class="explicacion-pago-efectivo">Esto es para saber a quien va dirigido y tener listo tu
+                                cambio.</p>
+                            <input type="tel" name="monto-pago" id="monto-pago" pattern="[0-9]+"
+                                placeholder="Ingrese el monto a pagar" title="Solo se permite numeros" required
+                                class="input-pago-efectivo">
+                            <input type="text" name="nombre-pago-efectivo" id="nombre-pago-efectivo"
+                                placeholder="Ingrese el nombre completo del titular" required
+                                class="input-pago-efectivo">
+                            <input type="submit" value="Enviar" class="boton-pago-efectivo" onclick="comprobarMonto()">
+                        </div>
+                        <!-- El target="_blank" es para que se abra otra pestaña al darle click -->
+                        <a href="https://maps.app.goo.gl/RupopUFkKXaSQszc7" class="conjunto-mapa-pago" target="_blank">
+                            <p class="click-aqui">Click aqui para ver en pantalla completa</p>
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d120364.63991812449!2d-70.84983225664065!3d19.481634599999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8eb1c5dd46d87a93%3A0x3b2fac12854855!2sInstituto%20Nacional%20de%20Formaci%C3%B3n%20T%C3%A9cnico%20Profesional!5e0!3m2!1ses!2sdo!4v1727871874553!5m2!1ses!2sdo"
+                                width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </a>
+                    </div>
+                </div>
+            </form>
+            <!-- ====================================================================================== -->
+        </header>
+
+{% block content %}
+
+
+{% endblock %}
+
+            <footer>
+                <p>&copy; Todos los derechos reservados por Skin Garden - 2024</p>
+            </footer>
+        </div>
+        <script src="{% static 'SkinGardenContent/js/funciones.js' %}"></script>
+    </body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es-DO">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Skin Garden, el jardin que cuida tu piel podras encontrar todas las variedades de productos para el cuidado de tu piel.">
+    <meta name="keywords" content="Skin Garden, productos para la piel, limpiadores, hidratacion de cuerpo, hidratacion de rostro">
+    <link rel="icon" href="{% static 'SkinGardenContent/imagenes/logo-banners/planta-logo.png' %}">
+    <link rel="stylesheet" href="{% static 'SkinGardenContent/css/estilos.css' %}">
+    <script src="{% static 'SkinGardenContent/js/funciones.js' %}"></script>
+    <title>Producto</title>
+    {% comment %} Esto es para redireccionar en el buscador y para el "Aviso()" {% endcomment %}
+</head>
+<body>
+    <div class="contenedor">
+        <header>
+           <!-- Menu (3 rayitas) -->
+            <div class="izquierda-header">
+                <figure class="logo-menu">
+                    <img src="{% static 'SkinGardenContent/imagenes/iconos/tresBarras-menu.png' %}" alt="menu" title="Menú" onclick="abrirMenu()">
+                </figure>
+                <!-- Logo -->
+                <a href="{% url 'inicio/invitado' %}">
+                    <figure class="logo">
+                        <img src="{% static 'SkinGardenContent/imagenes/logo-banners/header-menu-logo.png' %}" alt="Logo de Skin Garden" title="Logo de Skin Garden">
+                    </figure>
+                </a>
+            </div>
+            
+            <!-- Caja de busqueda -->
+            <div class="busqueda" onclick="cerrarMenuAbierto(), cerrarCarritoCompra()">
+                <div class="conjunto-lupa">
+                    <img src="{% static 'SkinGardenContent/imagenes/iconos/lupa.png' %}" alt="lupa" class="lupa" onclick="agrandarBuscador()">
+                    <form id="buscador-form" onsubmit="procesarBusquedaUsuario(event)">
+                        <div class="responsive-busqueda">
+                            <input type="search" name="buscar" id="buscar" title="Busqueda" placeholder="Buscar..." list="sugerencias" onclick="agrandarBuscador()">
+                            <!-- Lista de sugerencias -->
+                            <datalist id="sugerencias">
+                                <option value="Hidratación Rostro">
+                                <option value="Novedades">
+                                <option value="Limpiadores">
+                                <option value="Anti-Imperfecciones">
+                                <option value="Nuevo">
+                                <option value="Hidratación Cuerpo">
+                            </datalist>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Carrito de compras -->
+            <div class="derecha-header" onclick="cerrarMenuAbierto()">
+                <figure onclick="Aviso()">
+                    <img src="{% static 'SkinGardenContent/imagenes/iconos/carrito-Compras.png' %}" alt="Logo de Carrito de compras" title="Logo de Carrito de compras">
+                    <figcaption class="cantidad-carrito-compras">0</figcaption>
+                </figure>
+            </div>
+            <!-- 
+                =============================================================================================
+                IMPORTATE: esto es para ponerlo en el html y con css ocultarlo, para luego con JavaScript al darle al menu te muestre esto.
+                =============================================================================================
+            -->
+            <div class="menu-abierto">
+                <figure class="logo-menu">
+                    <img src="{% static 'SkinGardenContent/imagenes/iconos/tresBarras-menu.png' %}" alt="Logo menu" title="Logo menu" onclick="cerrarMenuAbierto()">
+                </figure>
+                <!-- Enlaces del menu - Inicio -->
+                <div class="nav-inicio">
+                    <a href="{% url 'inicio/invitado' %}" onclick="cerrarMenuAbierto()">
+                        <figure>
+                            <img src="{% static 'SkinGardenContent/imagenes/iconos/boton-home.png' %}" alt="Icono de Inicio" title="Icono de Inicio">
+                            <figcaption>Inicio</figcaption>
+                        </figure>
+                    </a>
+                </div>
+                <!-- Enlaces del menu - Categorias -->
+                <div class="nav-categoria">
+                    <figure>
+                        <img src="{% static 'SkinGardenContent/imagenes/iconos/boton-categorias.png' %}" alt="Icono de Categoría" title="Icono de Categoría">
+                        <figcaption>Categoría</figcaption>
+                    </figure>
+                    <ul>
+                        <li><a href="{% url 'hidratacionRostro/invitado' %}">Hidratación de rostro</a></li>
+                        <li><a href="{% url 'limpiadores/invitado' %}">Limpiadores</a></li>
+                        <li><a href="{% url 'crema/invitado' %}">Anti-imperfecciones</a></li>
+                        <li><a href="{% url 'hidratacionCuerpo/invitado' %}">Hidratación de cuerpo</a></li>
+                    </ul>
+                </div>
+                <div class="nav-novedades">
+                    <a href="{% url 'novedades/invitado' %}">
+                        <figure>
+                            <img src="{% static 'SkinGardenContent/imagenes/iconos/boton-novedades.png' %}" alt="Icono de Novedades" title="Icono de Novedades">
+                            <figcaption>Novedades</figcaption>
+                        </figure>
+                    </a>
+                </div>
+                <!-- En el futuro se vera como se hara esta parte -->
+                <div class="nav-carrito-compras">
+                    <a href="#">
+                        <figure onclick="Aviso()">
+                            <img src="{% static 'SkinGardenContent/imagenes/iconos/carrito-Compras.png' %}" alt="Icono de Carrito de compras" title="Icono de Carrito de compras">
+                            <figcaption>Carrito de compras</figcaption>
+                        </figure>
+                    </a>
+                </div>
+                <div class="nav-cerrar-sesion">
+                    <a href="{% url 'inicio_sesion' %}">
+                        <figure>
+                            <img src="{% static 'SkinGardenContent/imagenes/iconos/cerrar-sesion.png' %}" alt="Icono de Iniciar Sesión" title="Icono de Iniciar Sesión">
+                            <figcaption>Iniciar Sesión</figcaption>
+                        </figure>
+                    </a>
+                </div>
+            </div>
+        </header>
+        <main onclick="cerrarMenuAbierto(), cerrarCarritoCompra(), encojerBuscador()" class="responsive-main">
+            <section class="Compra">
+                <article>
+                    <a href="#"><img src="{% static 'SkinGardenContent/imagenes/iconos/volver-atras.png' %}" class="Atras" alt="" onclick="regresarAtras()"></a>
+                </article>
+                    <div class="informacion-superior-producto">
+                        <h5 class="categoria-producto">Categoria: <strong class="categoria-producto-info">{{ obtener.id_categoria.nom_categoria }}</strong></h5>
+                    </div>
+                    <img class="image" src="{{ obtener.imagen.url }}"  alt="{{ obtener.nom_producto }}" width="100%" title="{{ obtener.nom_producto }}">
+                    <article class="Selec">
+                        <h2 class="Titulo">{{ obtener.nom_producto }}</h2>
+                        <h3 class="subtitulos">Precio<b class="monto-articulo">
+                            {% if obtener.totalDescuento != productos.precio %}
+                                RD$ {{ obtener.totalDescuento }}
+                            {% else %}
+                                RD$ {{ obtener.precio }}
+                            {% endif %}
+                        </b></h3>
+                        <hr class="linea2">
+                        <h3  class="subtitulos">Cantidad</h3>
+                        <div class="contador">
+                            <div class="counter">
+                                <button class="decrement" onclick="Eliminar()">−</button>
+                                <!-- Este input esta tipo telefono, pero solo es de prueba sera modificado a futuro -->
+                                <input type="number"  class="count" id="count" value="1" min="0" step="1">
+                                <button class="increment" onclick="Añadir()">+</button>
+                            </div>
+                        </div> 
+                        <hr class="linea2"> 
+                        <h3 class="subtitulos-clasificacion">Calificación</h3>
+                        <button  class="boton-clasificar" onclick="Aviso()" >Calificar</button>
+                        <div class="Clasificacion">
+                            <div >
+                                <p id="rating-display"><span id="average-rating">☆☆☆☆☆</span></p>
+                            </div>
+                        </div>
+                        <hr class="linea2">
+                        <h3  class="subtitulos">Descripcion <button  class="boton-descripcion2" onclick="Ocultardescripcion()">Ocultar ▲</button><button class="boton-descripcion" id="boton-descripcion" onclick="descripcion()">Mostrar ▼</button></h3>
+                        
+                        <p class="description">{{ obtener.descripcion }}</p>
+                            <div class="rating-container">
+                                <h2>¡Danos tu calificación!</h2>
+                                <div class="rating" id="rating">
+                                    <span class="star" data-value="1">&#9733;</span>
+                                    <span class="star" data-value="2">&#9733;</span>
+                                    <span class="star" data-value="3">&#9733;</span>
+                                    <span class="star" data-value="4">&#9733;</span>
+                                    <span class="star" data-value="5">&#9733;</span>
+                                </div>
+                                <button class="boton-finalizar" onclick="FinalizarCalificacion()">Finalizar</button>
+                            </div>
+                        <button class="Boton2" onclick="Aviso()">Compra ahora</button>
+                        <button class="Boton" onclick="Aviso()"><img class="buy" src="{% static 'SkinGardenContent/imagenes/iconos/agregar-carrito.png' %}"  alt=""></button>
+                        <h5 class="fecha">Agregado: <a class="fecha-info">{{ obtener.fecha_pub }}</a></h5>
+                    </article>
+            </section>
+            <section class="contenedor-relacionado">
+                <h3 class="relacionados">Relacionados</h3>
+                <hr class="linea">
+                <button class="scroll-button-scroll-right" onclick="Derecha()"> » <p>Siguente</p></button>
+                <button class="scroll-button-scroll-left" onclick="Izquierda()"> « <p>Anterior</p></button>
+
+                <div class="filas-Producto" id="filas-Producto">
+                    {% for visualizar in relacionando %}
+                        <div class="bgCajas-producto">
+                            <img src="{% static 'SkinGardenContent/imagenes/iconos/añadir-carrito.png' %}" alt="frame" class="addCarrito" onclick="Aviso()">
+                            <figure class="figureCaja">
+                                <a href="{% url 'producto/usuario' producto_id=visualizar.id_productos %}" class="links">
+                                    <img src="{{ visualizar.imagen.url }}" alt="visualizar.nom_producto" class="imagenes-producto" title="visualizar.nom_producto">
+                                </a>
+                            </figure>
+                            <div class="productInfo">
+                                <h2 class="productName">{{ visualizar.nom_producto }}</h2>
+                                <p class="infoProduct">{{ visualizar.descripcion }}</p>
+                                <div class="ofertas-p">
+                                    <p class="precio">RD$ {{ visualizar.precio }}</p>
+                                    {% if visualizar.totalDescuento != visualizar.precio %}
+                                        <p class="nuevoP">RD$ {{ visualizar.totalDescuento }}</p> 
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <figure class="qualyRates">
+                                <p>{{ visualizar.calificacion }}</p>
+                            </figure>
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+        </main>
+        <footer>
+            <p>&copy; Todos los derechos reservados por Skin Garden</p>
+        </footer>
+    </div> 
+</body>
+</html>
