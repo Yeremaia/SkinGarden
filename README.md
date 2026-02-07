@@ -15,7 +15,7 @@ En base a la problematica dada, pensamos en una solucion que dice: Desarrollar u
 ## Integrantes al realizar este software
 
 * Yeremy Peralta
-* [Yorkenis](https://github.com/yorkenis?tab=overview&from=2024-12-01&to=2024-12-31)
+* [Yorkenis Rodríguez](https://github.com/yorkenis?tab=overview&from=2024-12-01&to=2024-12-31)
 * [Jeyfferson Gomez](https://github.com/JeyffersonGomez)
 
 ## Herramientas utilizado
